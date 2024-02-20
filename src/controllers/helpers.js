@@ -25,3 +25,11 @@ export const ok = (body) => {
         body,
     }
 }
+export const notFound = () => {
+    return {
+        statusCode: 404,
+        body: {
+            message: 'User not found',
+        },
+    }
+}
