@@ -11,7 +11,7 @@ export const created = (body) => {
         body,
     }
 }
-export const serveError = () => {
+export const serverError = () => {
     return {
         statusCode: 500,
         body: {
