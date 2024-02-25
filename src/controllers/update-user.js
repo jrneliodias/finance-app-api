@@ -1,6 +1,5 @@
 import validator from 'validator'
 import { badRequest, ok, serverError } from './helpers/http.js'
-import { UpdateUserUserCase } from '../use-cases/update-user.js'
 import { EmailAlreadyInUseError } from '../errors/user.js'
 import {
     emailIsAlreadyInUseResponse,
@@ -11,6 +10,9 @@ import {
 } from './helpers/users.js'
 
 export class UpdateUserController {
+    constructor(UpdateUserUseCase) {
+        this.updateUserUserCase = UpdateUserUseCase
+    }
     async execute(httpRequest) {
         try {
             const userId = httpRequest.params.userId
@@ -55,9 +57,10 @@ export class UpdateUserController {
                 }
             }
 
-            const updateUserUserCase = new UpdateUserUserCase()
-
-            const updateUser = await updateUserUserCase.execute(userId, params)
+            const updateUser = await this.updateUserUserCase.execute(
+                userId,
+                params,
+            )
 
             return ok(updateUser)
         } catch (error) {

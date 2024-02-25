@@ -8,7 +8,7 @@ import { GetUserByIdUseCase } from './src/use-cases/get-user-by-id.js'
 import { PostgresGetUserByIdRepository } from './src/repositories/postgres/get-user-by-id.js'
 import { DeleteUserUseCase } from './src/use-cases/delete-user.js'
 import { PostgresDeleteUserRepository } from './src/repositories/postgres/delete-user.js'
-import { UpdateUserUserCase } from './src/use-cases/update-user.js'
+import { UpdateUserUseCase } from './src/use-cases/update-user.js'
 import { PostgresUpdateUserRepository } from './src/repositories/postgres/update-user.js'
 import { PostgresGetUserByEmailRepository } from './src/repositories/postgres/get-user-by-email.js'
 
@@ -35,9 +35,9 @@ app.post('/api/users', async (request, response) => {
 app.patch('/api/users/:userId', async (request, response) => {
     const getUserByEmailUseRepository = new PostgresGetUserByEmailRepository()
     const updateUserUseRepository = new PostgresUpdateUserRepository()
-    const updateUserUseCase = new UpdateUserUserCase(
-        updateUserUseRepository,
+    const updateUserUseCase = new UpdateUserUseCase(
         getUserByEmailUseRepository,
+        updateUserUseRepository,
     )
     const updateUserController = new UpdateUserController(updateUserUseCase)
 
