@@ -16,7 +16,7 @@ import {
     DeleteUserUseCase,
     GetUserByIdUseCase,
     UpdateUserUseCase,
-} from '../../use-cases/index.js'
+} from '../../use-cases/users/index.js'
 
 export const makeGetUserByIdController = () => {
     const getUserByIdRepository = new PostgresGetUserByIdRepository()
