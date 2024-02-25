@@ -1,6 +1,6 @@
 import validator from 'validator'
-import { notFound, ok, serverError } from './helpers/http.js'
-import { invalidIdResponse } from './helpers/users.js'
+import { notFound, ok, serverError } from '../helpers/http.js'
+import { invalidIdResponse } from '../helpers/users.js'
 
 export class DeleteUserController {
     constructor(DeleteUserUseCase) {

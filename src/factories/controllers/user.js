@@ -3,7 +3,7 @@ import {
     DeleteUserController,
     GetUserByIdController,
     UpdateUserController,
-} from '../../controllers/index.js'
+} from '../../controllers/users/index.js'
 import {
     PostgresCreateUserRepository,
     PostgresGetUserByEmailRepository,
