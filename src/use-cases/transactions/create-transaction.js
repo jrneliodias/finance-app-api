@@ -8,20 +8,25 @@ export class CreateTransactionUseCase {
     }
 
     async execute(createTransactionParams) {
-        const userId = createTransactionParams.userId
-        const user = await this.getUseByIdRepository.execute(userId)
+        try {
+            const userId = createTransactionParams.user_id
+            const user = await this.getUseByIdRepository.execute(userId)
 
-        if (!user) {
-            throw new UserNotFoundError(userId)
+            if (!user) {
+                throw new UserNotFoundError(userId)
+            }
+
+            const transactionId = uuidv4()
+
+            const createdTransaction =
+                await this.createTransactionRepository.execute({
+                    ...createTransactionParams,
+                    id: transactionId,
+                })
+
+            return createdTransaction
+        } catch (error) {
+            console.error(error)
         }
-
-        const transactionId = uuidv4()
-
-        const createdTransaction = await this.createTransactionRepository({
-            ...createTransactionParams,
-            id: transactionId,
-        })
-
-        return createdTransaction
     }
 }
