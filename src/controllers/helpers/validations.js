@@ -7,6 +7,7 @@ export const invalidIdResponse = () =>
     badRequest({
         message: 'The provided id is not valid.',
     })
+
 export const requiredFieldIsMissingResponse = (missingField) =>
     badRequest({
         message: `The field ${missingField} is required.`,
