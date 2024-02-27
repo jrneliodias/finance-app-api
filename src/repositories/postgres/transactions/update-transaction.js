@@ -1,6 +1,6 @@
 import { PostgresHelper } from '../../../db/postgres/helper'
 
-export class PosgresUpdateTransactionParamsRepository {
+export class PosgresUpdateTransactionRepository {
     async execute(userId, updateTransactionParams) {
         try {
             const updateFields = []
