@@ -11,6 +11,11 @@ export const emailIsAlreadyInUseResponse = () =>
         message: 'Invalid e-mail. Please provide a valid one.',
     })
 
+export const userNotFoundResponse = (user_id) =>
+    badRequest({
+        message: `User ${user_id} not found`,
+    })
+
 export const checkIfPasswordIsValid = (password) => password.length >= 6
 
 export const checkIfEmailIsValid = (email) => validator.isEmail(email)
