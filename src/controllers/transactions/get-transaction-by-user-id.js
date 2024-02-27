@@ -13,13 +13,12 @@ export class GetTransactionByUserIdController {
     }
     async execute(httpRequest) {
         try {
-            const userId = httpRequest.query.user_id
-
-            if (!userId) {
-                return requiredFieldIsMissingResponse(userId)
+            const user_id = httpRequest.query.user_id
+            if (!user_id) {
+                return requiredFieldIsMissingResponse(user_id)
             }
 
-            const userIdisValid = checkIfIdIsValid(userId)
+            const userIdisValid = checkIfIdIsValid(user_id)
 
             if (!userIdisValid) {
                 return invalidIdResponse()
@@ -27,7 +26,7 @@ export class GetTransactionByUserIdController {
 
             const transactions =
                 await this.getTransactionByUserIdUseCase.execute({
-                    userId,
+                    user_id,
                 })
 
             return ok(transactions)
