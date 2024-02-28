@@ -12,7 +12,7 @@ export class DeleteTransactionController {
     }
     async execute(httpRequest) {
         try {
-            const transactionId = httpRequest.params.TransactionId
+            const transactionId = httpRequest.params.transactionId
             const isIdValid = validator.isUUID(transactionId)
 
             if (!isIdValid) {
