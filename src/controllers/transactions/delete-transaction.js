@@ -1,9 +1,9 @@
 import validator from 'validator'
 import {
-    notFound,
     ok,
     serverError,
     invalidIdResponse,
+    transactionNotFoundResponse,
 } from '../helpers/index.js'
 
 export class DeleteTransactionController {
@@ -23,7 +23,7 @@ export class DeleteTransactionController {
                 await this.deleteTransactionUseCase.execute(transactionId)
 
             if (!deletedTransaction) {
-                return notFound()
+                return transactionNotFoundResponse()
             }
             return ok(deletedTransaction)
         } catch (error) {
