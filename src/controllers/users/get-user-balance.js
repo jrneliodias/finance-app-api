@@ -22,7 +22,7 @@ export class GetUserBalanceController {
                 return invalidIdResponse()
             }
 
-            const balance = await this.getUserByIdUseCase.execute(userId)
+            const balance = await this.getUserBalanceUseCase.execute({ userId })
 
             if (!balance) {
                 return notFound({ message: 'Balance not found.' })
