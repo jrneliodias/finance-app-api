@@ -25,7 +25,7 @@ app.get('/api/users/:userId', async (request, response) => {
     response.status(statusCode).send(body)
 })
 
-app.get('/api/users/:userId', async (request, response) => {
+app.get('/api/users/:userId/balance', async (request, response) => {
     const getUserBalanceController = makeGetUserBalanceController()
 
     const { statusCode, body } = await getUserBalanceController.execute(request)
