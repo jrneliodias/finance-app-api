@@ -10,7 +10,7 @@ import {
     PostgresGetTransactionByUserId,
     PostgresUpdateTransactionRepository,
 } from '../../repositories/postgres/transactions/index.js'
-import { PostgresGetUserByIdRepository } from '../../repositories/postgres/users/index.js'
+import { PostgresGetUserByIdRepository } from '../../repositories/postgres/users/get-user-by-id.js'
 import {
     CreateTransactionUseCase,
     DeleteTransactionUseCase,
