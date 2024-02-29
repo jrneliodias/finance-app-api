@@ -17,3 +17,5 @@ O aplicativos está sendo construido com:
 ## Day Log
 
 - No momento estou construindo o Back-End em Node e Express para criar as rotas de Create, Read, Update e Delete (CRUD) implementando a arquitetura MVC e testes de validação dos parâmetros.
+
+- As rotas de Create, Read, Update e Delete (CRUD) das transações dos usuários.
