@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres-finance-app
+    environment:
+        POSTGRES_PASSWORD: password
+        POSTGRES_USER: postgres
+        POSTGRES_DB: finance-app
+    ports:
+     - "5432:5432"
+    volumes:
+      - ./postgres/finance-app:/var/lib/postgresql/data

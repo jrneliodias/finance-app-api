@@ -2,5 +2,4 @@ node_modules
 .postgres
 .env
 
-breakline.js
-output.txt
+.postgres-data
