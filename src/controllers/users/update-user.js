@@ -6,7 +6,7 @@ import {
     serverError,
     invalidIdResponse,
 } from '../helpers/index.js'
-import { updateUserSchema } from '../../../schemas/user.js'
+import { updateUserSchema } from '../../schemas/user.js'
 import { ZodError } from 'zod'
 
 export class UpdateUserController {
