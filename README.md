@@ -33,13 +33,35 @@ O aplicativos está sendo construido com:
 - Delete User Controller: Verifica se o id passado é válido e passa para o DeleteUseCase. Caso contrário, retorna um erro personalizado.
   
 #### Transaction
-- Create User Controller: Verificar se o id é válido, verificar se todos os campos obrigatórios estão presentes e válidos com Zod, verificar se o email sendo cadastrado já não existe no banco de dados. Então passa para o CreateUserUseCase. Caso contrário, retorna um erro personalizado.
-- Update User Controller: Verificar se o campo para mundança é válida e respeita seu requisito. Então passa para o UpdateUserUseCase. Caso contrário, retorna um erro personalizado.
-- Get User Controller by Id: Verifica se o id passado é válido e passa para o GetUserByIdUseCase. Caso contrário, retorna um erro personalizado.
-- Get User Controller by Email: Verifica se o email passado é válido e passa para o GetUserByEmailUseCase. Caso contrário, retorna um erro personalizado.
-- Get User Balance Controller: Verifica se o id passado é válido e passa para o GetUserBalanceUseCase. Caso contrário, retorna um erro personalizado.
-- Delete User Controller: Verifica se o id passado é válido e passa para o DeleteUseCase. Caso contrário, retorna um erro personalizado.
+- Create Transaction Controller: Verificar se o id é válido, verificar se todos os campos obrigatórios estão presentes e válidos com Zod, verificar se o email sendo cadastrado já não existe no banco de dados. Então passa para o CreateTransactionUseCase. Caso contrário, retorna um erro personalizado.
+- Update Transaction Controller: Verificar se o campo para mundança é válida e respeita seu requisito. Então passa para o UpdateTransactionUseCase. Caso contrário, retorna um erro personalizado.
 
+- Get Transaction Controller by User Id: Verifica se o id do usuário passado é válido e passa para o GetTransactionByIdUseCase. Caso contrário, retorna um erro personalizado.
+
+- Delete Transaction Controller: Verifica se o id da transação passado é válido e passa para o DeleteUseCase. Caso contrário, retorna um erro personalizado.
+
+### Use Case
+#### User
+- Create User Use Case: Verificar se o email está cadastrado no banco de dados. Cria o uuid do usuário, criptografa a senha. Então passa para o CreateTransactionUseCase. Caso contrário, retorna um erro personalizado.
+- Update User Use Case:  Verificar se o email está cadastrado no banco de dados. Cria o uuid do usuário, criptografa a senha. Então passa para o CreateTransactionUseCase. Caso contrário, retorna um erro personalizado.
+- Get User by Id Use Case: Passa para o GetUserByIdUseCase. Caso contrário, retorna um erro personalizado.
+
+- Get User Balance Use Case: Verifica se o id passado pertence a um usuário no banco e passa para o GetUserBalanceUseCase. Caso contrário, retorna um erro personalizado.
+
+- Delete User Use Case: Verifica se o id passado pertence a um usuário no banco e passa para o GetUserBalanceUseCase. Caso contrário, retorna um erro personalizado.
+  
+#### Transaction
+- Create Transaction Use Case: Verifica se o id passado pertence a um usuário no banco, cria um uuid e passa para o GetUserBalanceUseCase. Caso contrário, retorna um erro personalizado.
+
+- Update Transaction Use Case: Passar os parâmetros da transanção para o CreateTransactionUseCase. Caso contrário, retorna um erro personalizado.
+
+- Get Transaction Use Case by User Id: Verifica se o id pertence a um usuário no banco de dados e passa para o GetTransactionByIdUseCase. Caso contrário, retorna um erro personalizado.
+
+- Delete Transaction Use Case: Verifica se o id da transação passado pertence a uma transação e passa para o DeleteTransactionUseCase. Caso contrário, retorna um erro personalizado.
+
+### Repositories
+#### User e Transaction
+- Atua diretamente com o banco de dados com o Prisma ORM com os parâmetros validados pelos Controllers e pelas regras de negócio do Use Case.
 
 ## Day Log
 
