@@ -70,6 +70,22 @@ describe('UpdateUserController', () => {
         // assert
         expect(httpResponse.statusCode).toBe(400)
     })
+    it('should return 400 when a invalid email is provided', async () => {
+        // arrange
+        const { sut } = makeSut()
+
+        // act
+        const httpResponse = await sut.execute({
+            ...httpRequest,
+            body: {
+                ...httpRequest.body,
+                email: 'invalid_email',
+            },
+        })
+
+        // assert
+        expect(httpResponse.statusCode).toBe(400)
+    })
     // it('should return 404 when the user is not found', async () => {
     //     const { sut, getUserByIdUseCase } = makeSut()
     //     jest.spyOn(getUserByIdUseCase, 'execute').mockResolvedValue(null)
