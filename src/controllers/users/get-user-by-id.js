@@ -24,7 +24,7 @@ export class GetUserByIdController {
             const user = await this.getUserByIdUseCase.execute(userId)
 
             if (!user) {
-                return notFound({ message: 'Transaction not found.' })
+                return notFound({ message: 'User not found.' })
             }
 
             return ok(user)
