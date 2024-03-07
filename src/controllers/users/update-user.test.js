@@ -64,7 +64,7 @@ describe('UpdateUserController', () => {
         // act
         const httpResponse = await sut.execute({
             ...httpRequest,
-            body: { invalid_field: '' },
+            body: { invalid_field: 'invalid_field' },
         })
 
         // assert
@@ -102,25 +102,15 @@ describe('UpdateUserController', () => {
         // assert
         expect(httpResponse.statusCode).toBe(400)
     })
-    // it('should return 404 when the user is not found', async () => {
-    //     const { sut, getUserByIdUseCase } = makeSut()
-    //     jest.spyOn(getUserByIdUseCase, 'execute').mockResolvedValue(null)
 
-    //     // act
-    //     const httpResponse = await sut.execute(httpRequest)
+    it('should return 500 when GetUserUseCase throws a generic Error', async () => {
+        const { sut, updateUserUseCase } = makeSut()
+        jest.spyOn(updateUserUseCase, 'execute').mockRejectedValue(new Error())
 
-    //     // assert
-    //     expect(httpResponse.statusCode).toBe(404)
-    // })
+        // act
+        const httpResponse = await sut.execute(httpRequest)
 
-    // it('should return 500 when GetUserUseCase throws a Error', async () => {
-    //     const { sut, getUserByIdUseCase } = makeSut()
-    //     jest.spyOn(getUserByIdUseCase, 'execute').mockRejectedValue(new Error())
-
-    //     // act
-    //     const httpResponse = await sut.execute(httpRequest)
-
-    //     // assert
-    //     expect(httpResponse.statusCode).toBe(500)
-    // })
+        // assert
+        expect(httpResponse.statusCode).toBe(500)
+    })
 })
