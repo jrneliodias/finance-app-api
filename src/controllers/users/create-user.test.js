@@ -137,7 +137,7 @@ describe('Create User Controller', () => {
         expect(result.statusCode).toBe(500)
     })
 
-    it('should return 300 if CreateUseCase throws EmailAlreadyUseError', async () => {
+    it('should return 400 if CreateUseCase throws EmailAlreadyUseError', async () => {
         const { sut, createUserUseCase } = makeSut()
 
         // act
