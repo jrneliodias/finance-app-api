@@ -42,18 +42,21 @@ describe('UpdateUserController', () => {
         // assert
         expect(httpResponse.statusCode).toBe(200)
     })
-    // it('should return 400 when a invalid id is provided', async () => {
-    //     // arrange
-    //     const { sut } = makeSut()
+    it('should return 400 when a invalid id is provided', async () => {
+        // arrange
+        const { sut } = makeSut()
 
-    //     // act
-    //     const httpResponse = await sut.execute({
-    //         params: { userId: 'invalid_id' },
-    //     })
+        // act
+        const httpResponse = await sut.execute({
+            ...httpRequest,
+            params: {
+                userId: 'invalid_id',
+            },
+        })
 
-    //     // assert
-    //     expect(httpResponse.statusCode).toBe(400)
-    // })
+        // assert
+        expect(httpResponse.statusCode).toBe(400)
+    })
     // it('should return 404 when the user is not found', async () => {
     //     const { sut, getUserByIdUseCase } = makeSut()
     //     jest.spyOn(getUserByIdUseCase, 'execute').mockResolvedValue(null)
