@@ -36,6 +36,7 @@ describe('Create Transaction Controller', () => {
         // assert
         expect(httpResponse.statusCode).toBe(201)
     })
+
     it('should return 400 if user_id is not valid', async () => {
         const { sut } = makeSut()
         // act
@@ -44,6 +45,21 @@ describe('Create Transaction Controller', () => {
             body: {
                 ...httpRequest.body,
                 user_id: 'invalid_id',
+            },
+        })
+
+        // assert
+        expect(result.statusCode).toBe(400)
+    })
+
+    it('should return 400 if name is not valid', async () => {
+        const { sut } = makeSut()
+        // act
+
+        const result = await sut.execute({
+            body: {
+                ...httpRequest.body,
+                name: '',
             },
         })
 
