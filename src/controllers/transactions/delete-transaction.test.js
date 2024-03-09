@@ -31,7 +31,7 @@ describe('DeleteTransactionController', () => {
         },
     }
 
-    it('should return 200 if user is deleted', async () => {
+    it('should return 200 if transaction is deleted', async () => {
         const { sut } = makeSut()
 
         // act
@@ -53,16 +53,16 @@ describe('DeleteTransactionController', () => {
         expect(result.statusCode).toBe(400)
     })
 
-    // it('should return 404 if user is not found', async () => {
-    //     const { sut, deleteTransactionUseCase } = makeSut()
+    it('should return 404 if transaction is not found', async () => {
+        const { sut, deleteTransactionUseCase } = makeSut()
 
-    //     jest.spyOn(deleteTransactionUseCase, 'execute').mockResolvedValue(null)
-    //     // act
-    //     const result = await sut.execute(httpRequest)
+        jest.spyOn(deleteTransactionUseCase, 'execute').mockResolvedValue(null)
+        // act
+        const result = await sut.execute(httpRequest)
 
-    //     // assert
-    //     expect(result.statusCode).toBe(404)
-    // })
+        // assert
+        expect(result.statusCode).toBe(404)
+    })
     // it('should return 500 if DeleteUseCase throws', async () => {
     //     const { sut, deleteTransactionUseCase } = makeSut()
 
