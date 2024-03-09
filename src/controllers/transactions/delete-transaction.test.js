@@ -63,18 +63,18 @@ describe('DeleteTransactionController', () => {
         // assert
         expect(result.statusCode).toBe(404)
     })
-    // it('should return 500 if DeleteUseCase throws', async () => {
-    //     const { sut, deleteTransactionUseCase } = makeSut()
+    it('should return 500 if DeleteTransactionUseCase throws', async () => {
+        const { sut, deleteTransactionUseCase } = makeSut()
 
-    //     // act
+        // act
 
-    //     jest.spyOn(deleteTransactionUseCase, 'execute').mockRejectedValueOnce(
-    //         new Error(),
-    //     )
+        jest.spyOn(deleteTransactionUseCase, 'execute').mockRejectedValueOnce(
+            new Error(),
+        )
 
-    //     const result = await sut.execute(httpRequest)
+        const result = await sut.execute(httpRequest)
 
-    //     // assert
-    //     expect(result.statusCode).toBe(500)
-    // })
+        // assert
+        expect(result.statusCode).toBe(500)
+    })
 })
