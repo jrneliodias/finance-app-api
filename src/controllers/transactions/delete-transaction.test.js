@@ -41,15 +41,17 @@ describe('DeleteTransactionController', () => {
         expect(result.statusCode).toBe(200)
     })
 
-    // it('should return 400 if id is invalid', async () => {
-    //     const { sut } = makeSut()
+    it('should return 400 if id is invalid', async () => {
+        const { sut } = makeSut()
 
-    //     // act
-    //     const result = await sut.execute({ params: { userId: 'invalid_id' } })
+        // act
+        const result = await sut.execute({
+            params: { transactionId: 'invalid_id' },
+        })
 
-    //     // assert
-    //     expect(result.statusCode).toBe(400)
-    // })
+        // assert
+        expect(result.statusCode).toBe(400)
+    })
 
     // it('should return 404 if user is not found', async () => {
     //     const { sut, deleteTransactionUseCase } = makeSut()
