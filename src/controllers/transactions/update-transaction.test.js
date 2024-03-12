@@ -104,18 +104,19 @@ describe('Update Transaction Controller', () => {
         // assert
         expect(result.statusCode).toBe(400)
     })
-    it('should return 500 if UpdateTransactionUseCase throws', async () => {
+
+    it('should call UpdateTransactionUseCase with correct params', async () => {
         const { sut, updateTransactionUseCase } = makeSut()
+        const executeSpy = jest.spyOn(updateTransactionUseCase, 'execute')
 
         // act
 
-        jest.spyOn(updateTransactionUseCase, 'execute').mockRejectedValueOnce(
-            new Error(),
-        )
-
-        const result = await sut.execute(httpRequest)
+        await sut.execute(httpRequest)
 
         // assert
-        expect(result.statusCode).toBe(500)
+        expect(executeSpy).toHaveBeenCalledWith(
+            httpRequest.params.transactionId,
+            httpRequest.body,
+        )
     })
 })
