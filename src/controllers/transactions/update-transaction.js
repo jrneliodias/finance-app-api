@@ -1,12 +1,8 @@
 import validator from 'validator'
 import { badRequest, ok, serverError } from '../helpers/http.js'
-import {
-    checkIfAmountIsValid,
-    checkIfTypeIsValid,
-    invalidAmountResponse,
-    invalidTypeResponse,
-} from '../helpers/transaction.js'
 import { invalidIdResponse } from '../helpers/validations.js'
+import { updateTransactionSchema } from '../../schemas/transaction.js'
+import { ZodError } from 'zod'
 
 export class UpdateTransactionController {
     constructor(updateTransactionUseCase) {
@@ -24,32 +20,7 @@ export class UpdateTransactionController {
             }
             const params = httpRequest.body
 
-            const allowedFields = ['name', 'date', 'amount', 'type']
-
-            const someFieldIsNotAllowed = Object.keys(params).some(
-                (field) => !allowedFields.includes(field),
-            )
-            if (someFieldIsNotAllowed) {
-                return badRequest({
-                    message: 'Some provided field is not allowed.',
-                })
-            }
-
-            if (params.amount) {
-                const amountIsValid = checkIfAmountIsValid(params.amount)
-
-                if (!amountIsValid) {
-                    return invalidAmountResponse()
-                }
-            }
-
-            if (params.type) {
-                const typeIsValid = checkIfTypeIsValid(params.type)
-
-                if (!typeIsValid) {
-                    return invalidTypeResponse()
-                }
-            }
+            await updateTransactionSchema.parseAsync(params)
 
             const transaction = await this.updateTransactionUseCase.execute(
                 transactionId,
@@ -58,6 +29,11 @@ export class UpdateTransactionController {
 
             return ok(transaction)
         } catch (error) {
+            if (error instanceof ZodError) {
+                return badRequest({
+                    message: error.errors[0].message,
+                })
+            }
             console.error(error)
             return serverError()
         }
