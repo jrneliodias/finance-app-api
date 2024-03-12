@@ -8,12 +8,10 @@ export const createTransactionSchema = z.object({
     name: z.string({ required_error: 'User ID is required.' }).trim().min(1, {
         message: 'Name is required.',
     }),
-    date: z
-        .string()
-        .datetime({
-            required_error: 'Date is required.',
-            message: 'Date must be a valid date.',
-        }),
+    date: z.string().datetime({
+        required_error: 'Date is required.',
+        message: 'Date must be a valid date.',
+    }),
     type: z.enum(['EXPENSE', 'EARNING', 'INVESTMENT'], {
         errorMap: () => ({
             message: 'Type must be EXPENSE, EARNING or INVESTMENT.',
@@ -34,3 +32,8 @@ export const createTransactionSchema = z.object({
             }),
         ),
 })
+
+export const updateTransactionSchema = createTransactionSchema
+    .omit({ user_id: true })
+    .partial()
+    .strict({ message: 'Some provided field is not allowed.' })
