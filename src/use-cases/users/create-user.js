@@ -1,11 +1,16 @@
-import { v4 as uuidv4 } from 'uuid'
 import { EmailAlreadyInUseError } from '../../errors/user.js'
 
 export class CreateUserUseCase {
-    constructor(getUserByEmail, createUserRepository, passwordHasherAdpater) {
+    constructor(
+        getUserByEmail,
+        createUserRepository,
+        passwordHasherAdpater,
+        idGeneratorAdapter,
+    ) {
         this.createUserRepository = createUserRepository
         this.getUserByEmail = getUserByEmail
         this.passwordHasherAdpater = passwordHasherAdpater
+        this.idGeneratorAdapter = idGeneratorAdapter
     }
     async execute(createUserParams) {
         // TODO: verificar se o e-mail já está em uso
@@ -18,7 +23,7 @@ export class CreateUserUseCase {
             throw new EmailAlreadyInUseError(createUserParams.email)
         }
         // gerar ID do usuário
-        const userId = uuidv4()
+        const userId = this.idGeneratorAdapter.execute()
 
         // criptografar a senha
         const hashedPassword = await this.passwordHasherAdpater.hash(
