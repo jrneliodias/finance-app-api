@@ -23,7 +23,7 @@ export class CreateUserUseCase {
             throw new EmailAlreadyInUseError(createUserParams.email)
         }
         // gerar ID do usuário
-        const userId = this.idGeneratorAdapter.execute()
+        const userId = await this.idGeneratorAdapter.execute()
 
         // criptografar a senha
         const hashedPassword = await this.passwordHasherAdpater.hash(
