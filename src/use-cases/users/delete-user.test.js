@@ -35,4 +35,16 @@ describe('DeleteUserUseCase', () => {
         expect(deletedUser).toBeTruthy()
         expect(deletedUser).toEqual(user)
     })
+    it('should call DeleteUserRepository with correct params', async () => {
+        // arrange
+        const { sut, deleteUserRepositoryStub } = makeSut()
+        const executeSpy = jest.spyOn(deleteUserRepositoryStub, 'execute')
+        const userId = faker.string.uuid()
+
+        // act
+        await sut.execute(userId)
+
+        // assert
+        expect(executeSpy).toHaveBeenCalledWith(userId)
+    })
 })
