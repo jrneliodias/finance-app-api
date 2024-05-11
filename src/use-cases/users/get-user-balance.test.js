@@ -9,6 +9,13 @@ describe('GetUserBalanceUseCase', () => {
         investments: faker.finance.amount(),
         balance: faker.finance.amount(),
     }
+    const user = {
+        first_name: faker.person.firstName(),
+        last_name: faker.person.lastName(),
+        email: faker.internet.email(),
+        password: faker.internet.password({ length: 7 }),
+    }
+
     class GetUserBalanceRepositoryStub {
         async execute(userId) {
             return { ...user, id: userId }
@@ -19,13 +26,6 @@ describe('GetUserBalanceUseCase', () => {
         async execute() {
             return userBalance
         }
-    }
-
-    const user = {
-        first_name: faker.person.firstName(),
-        last_name: faker.person.lastName(),
-        email: faker.internet.email(),
-        password: faker.internet.password({ length: 7 }),
     }
 
     const makeSut = () => {
@@ -70,5 +70,15 @@ describe('GetUserBalanceUseCase', () => {
         const promise = sut.execute(faker.string.uuid())
 
         await expect(promise).rejects.toThrow()
+    })
+
+    it('should call GetuserBalanceRepository with correct params', async () => {
+        const { sut, getUserBalanceRepositoryStub } = makeSut()
+        const executeSpy = jest.spyOn(getUserBalanceRepositoryStub, 'execute')
+        const userId = faker.string.uuid()
+
+        await sut.execute(userId)
+
+        expect(executeSpy).toHaveBeenCalledWith(userId)
     })
 })
