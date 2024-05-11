@@ -150,4 +150,17 @@ describe('UpdateUserUseCase', () => {
 
         await expect(promise).rejects.toThrow()
     })
+
+    it('should throw if PostgresUpdateUserRepository throws', async () => {
+        const { sut, updateUserRepositoryStub } = makeSut()
+        jest.spyOn(updateUserRepositoryStub, 'execute').mockImplementationOnce(
+            () => {
+                throw new Error()
+            },
+        )
+
+        const promise = sut.execute(user.id, user)
+
+        await expect(promise).rejects.toThrow()
+    })
 })
