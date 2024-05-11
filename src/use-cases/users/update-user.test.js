@@ -65,6 +65,21 @@ describe('UpdateUserUseCase', () => {
         expect(updatedUser).toEqual({ ...user, email: updatedEmail })
     })
 
+    it('should call PostgresGetUserByEmailRepository with correct params', async () => {
+        const { sut, getUserByEmailRepositoryStub } = makeSut()
+        const updatedEmail = faker.internet.email()
+        const getUserByEmailRepositorySpy = jest.spyOn(
+            getUserByEmailRepositoryStub,
+            'execute',
+        )
+
+        await sut.execute(user.id, {
+            email: updatedEmail,
+        })
+
+        expect(getUserByEmailRepositorySpy).toHaveBeenCalledWith(updatedEmail)
+    })
+
     it('should update user sucessfully with password', async () => {
         const { sut, passwordHasherAdpaterStub } = makeSut()
         const updatedPassword = await passwordHasherAdpaterStub.hash()
