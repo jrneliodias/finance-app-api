@@ -90,4 +90,21 @@ describe('UpdateUserUseCase', () => {
 
         expect(updatedUser).toEqual({ ...user, password: updatedPassword })
     })
+
+    it('should call PasswordHasherAdapter with correct params', async () => {
+        const { sut, passwordHasherAdpaterStub } = makeSut()
+        const updatedPassword = faker.internet.password()
+        const getUserByEmailRepositorySpy = jest.spyOn(
+            passwordHasherAdpaterStub,
+            'hash',
+        )
+
+        await sut.execute(user.id, {
+            password: updatedPassword,
+        })
+
+        expect(getUserByEmailRepositorySpy).toHaveBeenCalledWith(
+            updatedPassword,
+        )
+    })
 })
