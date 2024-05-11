@@ -1,10 +1,14 @@
 import { EmailAlreadyInUseError } from '../../errors/user.js'
-import bcrypt from 'bcrypt'
 
 export class UpdateUserUseCase {
-    constructor(getUserByEmailRepository, updateUserRepository) {
+    constructor(
+        getUserByEmailRepository,
+        updateUserRepository,
+        passwordHasherAdpater,
+    ) {
         this.postgresGetUserByEmailRepository = getUserByEmailRepository
         this.postgresUpdateUserRepository = updateUserRepository
+        this.passwordHasherAdpater = passwordHasherAdpater
     }
     async execute(userId, updateUserParams) {
         if (updateUserParams.email) {
@@ -24,9 +28,8 @@ export class UpdateUserUseCase {
 
         if (updateUserParams.password) {
             // criptografar a senha
-            const hashedPassword = await bcrypt.hash(
+            const hashedPassword = await this.passwordHasherAdpater.hash(
                 updateUserParams.password,
-                10,
             )
             userDataToUpdate.password = hashedPassword
         }
