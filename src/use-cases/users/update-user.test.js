@@ -54,7 +54,7 @@ describe('UpdateUserUseCase', () => {
         expect(updatedUser).toEqual(user)
     })
 
-    it('should update user sucessfully (with password and email)', async () => {
+    it('should update user sucessfully with email', async () => {
         const { sut } = makeSut()
         const updatedEmail = faker.internet.email()
 
@@ -63,5 +63,16 @@ describe('UpdateUserUseCase', () => {
         })
 
         expect(updatedUser).toEqual({ ...user, email: updatedEmail })
+    })
+
+    it('should update user sucessfully with password', async () => {
+        const { sut, passwordHasherAdpaterStub } = makeSut()
+        const updatedPassword = await passwordHasherAdpaterStub.hash()
+
+        const updatedUser = await sut.execute(user.id, {
+            password: updatedPassword,
+        })
+
+        expect(updatedUser).toEqual({ ...user, password: updatedPassword })
     })
 })
