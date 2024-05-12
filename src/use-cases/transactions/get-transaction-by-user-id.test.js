@@ -41,4 +41,13 @@ describe('GetTransactionByUserIdUseCase', () => {
 
         expect(result).toEqual([])
     })
+
+    it("should throw UserNotFoundError if user doesn't exists", async () => {
+        const { sut, getUserByIdRepositoryStub } = makeSut()
+        jest.spyOn(getUserByIdRepositoryStub, 'execute').mockResolvedValueOnce(
+            null,
+        )
+        const promise = sut.execute(faker.string.uuid())
+        await expect(promise).rejects.toThrow()
+    })
 })
