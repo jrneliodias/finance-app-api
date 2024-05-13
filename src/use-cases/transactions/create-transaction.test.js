@@ -1,23 +1,12 @@
-import { faker } from '@faker-js/faker'
 import { CreateTransactionUseCase } from './create-transaction'
+import { transaction, user } from '../../tests'
 
 describe('CreateTransactionUseCase', () => {
-    const transaction = {
-        id: faker.string.uuid(),
-        user_id: faker.string.uuid(),
-        name: faker.finance.transactionType(),
-        date: faker.date.anytime().toISOString(),
-        amount: Number(faker.finance.amount()),
-        type: faker.helpers.arrayElement(['EXPENSE', 'INVESTMENT', 'EARNING']),
+    const createTransactionParams = {
+        ...transaction,
+        id: undefined,
     }
 
-    const user = {
-        id: faker.string.uuid(),
-        first_name: faker.person.firstName(),
-        last_name: faker.person.lastName(),
-        email: faker.internet.email(),
-        password: faker.internet.password({ length: 7 }),
-    }
     class CreateTransactionRepositoryStub {
         async execute(transaction) {
             return transaction
@@ -31,7 +20,7 @@ describe('CreateTransactionUseCase', () => {
     }
     class IdGeneratorAdapterStub {
         execute() {
-            return transaction.id
+            return 'generated_id'
         }
     }
 
@@ -56,8 +45,27 @@ describe('CreateTransactionUseCase', () => {
     it('should create a transaction', async () => {
         const { sut } = makeSut()
 
-        const result = await sut.execute(transaction)
+        const result = await sut.execute(createTransactionParams)
 
-        expect(result).toEqual(transaction)
+        expect(result).toEqual({ ...transaction, id: 'generated_id' })
+    })
+
+    it('should throw if CreateTransactionRepository throws', async () => {
+        const { sut, createTransactionRepositoryStub } = makeSut()
+        jest.spyOn(
+            createTransactionRepositoryStub,
+            'execute',
+        ).mockRejectedValueOnce(new Error())
+        const promise = sut.execute(transaction)
+        await expect(promise).rejects.toThrow()
+    })
+
+    it("should throw UserNotFoundError if user doesn't exists", async () => {
+        const { sut, getUserByIdRepositoryStub } = makeSut()
+        jest.spyOn(getUserByIdRepositoryStub, 'execute').mockResolvedValueOnce(
+            null,
+        )
+        const promise = sut.execute(createTransactionParams)
+        await expect(promise).rejects.toThrow()
     })
 })
