@@ -5,9 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "dotenv -e .env.test -- jest --watch --silent",
-    "test:coverage": "dotenv -e .env.test -- jest --coverage --silent",
-    "postinstall": "npx husky install",
+    "test": "dotenv -e .env.test -- jest --silent",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test --coverage ",
+    "postinstall": "husky install && prisma generate",
     "migrations": "node src/db/postgres/migrations/exec.js",
     "start:dev": "node --watch index.js"
   },
