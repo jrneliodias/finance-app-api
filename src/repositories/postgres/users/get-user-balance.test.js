@@ -98,4 +98,38 @@ describe('GetUserBalanceRepository', () => {
         expect(Number(result.investments)).toStrictEqual(testTotalInvestment)
         expect(Number(result.balance)).toStrictEqual(testBalance)
     })
+
+    it('should call Prisma aggregate 3 times', async () => {
+        const { sut } = makeSut()
+        const prismaSpy = jest.spyOn(prisma.transaction, 'aggregate')
+        await sut.execute(fakeUser.id)
+        expect(prismaSpy).toHaveBeenCalledTimes(3)
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                user_id: fakeUser.id,
+                type: 'EARNING',
+            },
+            _sum: {
+                amount: true,
+            },
+        })
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                user_id: fakeUser.id,
+                type: 'EXPENSE',
+            },
+            _sum: {
+                amount: true,
+            },
+        })
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                user_id: fakeUser.id,
+                type: 'INVESTMENT',
+            },
+            _sum: {
+                amount: true,
+            },
+        })
+    })
 })
