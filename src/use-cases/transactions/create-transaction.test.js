@@ -68,4 +68,16 @@ describe('CreateTransactionUseCase', () => {
         const promise = sut.execute(createTransactionParams)
         await expect(promise).rejects.toThrow()
     })
+
+    it('should call GetUserByIdRepository with correct params', async () => {
+        const { sut, getUserByIdRepositoryStub } = makeSut()
+        const getUserByIdRepositorySpy = jest.spyOn(
+            getUserByIdRepositoryStub,
+            'execute',
+        )
+        await sut.execute(createTransactionParams)
+        expect(getUserByIdRepositorySpy).toHaveBeenCalledWith(
+            createTransactionParams.user_id,
+        )
+    })
 })
