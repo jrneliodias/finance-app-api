@@ -33,7 +33,7 @@ describe('DeleteTransactionRepository', () => {
         })
     })
 
-    it('should return null if Prisma throws', async () => {
+    it('should throwsif Prisma throws  a generic error ', async () => {
         const user = await prisma.user.create({ data: fakeUser })
         const createTransaction = await prisma.transaction.create({
             data: { ...transaction, user_id: user.id },
@@ -44,9 +44,8 @@ describe('DeleteTransactionRepository', () => {
         jest.spyOn(prisma.transaction, 'delete').mockRejectedValueOnce(
             new Error(),
         )
+        const promise = sut.execute(createTransaction.id)
 
-        const result = await sut.execute(createTransaction.id)
-
-        expect(result).toBeNull()
+        await expect(promise).rejects.toThrow()
     })
 })
