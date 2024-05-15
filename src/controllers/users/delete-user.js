@@ -1,10 +1,11 @@
 import validator from 'validator'
 import {
-    notFound,
     ok,
     serverError,
     invalidIdResponse,
+    userNotFoundResponse,
 } from '../helpers/index.js'
+import { UserNotFoundError } from '../../errors/user.js'
 
 export class DeleteUserController {
     constructor(DeleteUserUseCase) {
@@ -21,11 +22,11 @@ export class DeleteUserController {
 
             const deleteduser = await this.deleteUserUseCase.execute(userId)
 
-            if (!deleteduser) {
-                return notFound({ message: 'User not found.' })
-            }
             return ok(deleteduser)
         } catch (error) {
+            if (error instanceof UserNotFoundError) {
+                return userNotFoundResponse(httpRequest.params.userId)
+            }
             console.error(error)
             return serverError()
         }
