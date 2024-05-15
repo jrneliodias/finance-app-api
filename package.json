@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "dotenv -e .env.test -- jest --silent",
-    "test:watch": "npm run test -- --watch",
+    "test:watch": "npm run test -- --watch --runInBand",
     "test:coverage": "npm run test --coverage ",
     "postinstall": "husky install && prisma generate",
     "migrations": "node src/db/postgres/migrations/exec.js",
