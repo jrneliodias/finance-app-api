@@ -7,7 +7,7 @@ import {
 import {
     makeCreateTransactionController,
     makeDeleteTransactionController,
-    makeGetTransactioByUserIdController,
+    makeGetTransactionByUserIdController,
     makeUpdateTransactionController,
 } from './transaction'
 
@@ -22,7 +22,7 @@ describe('Transactions Factories Controller', () => {
 
     it('should return an instance of GetTransactionByUserIdController', () => {
         const factoryGetTransactionController =
-            makeGetTransactioByUserIdController()
+            makeGetTransactionByUserIdController()
         expect(factoryGetTransactionController).toBeInstanceOf(
             GetTransactionByUserIdController,
         )

@@ -33,7 +33,7 @@ export const makeCreateTransactionController = () => {
     return createTransactionController
 }
 
-export const makeGetTransactioByUserIdController = () => {
+export const makeGetTransactionByUserIdController = () => {
     const getTransactionByUserIdRepository =
         new PostgresGetTransactionByUserId()
     const getUserByIdRepository = new PostgresGetUserByIdRepository()
@@ -41,11 +41,11 @@ export const makeGetTransactioByUserIdController = () => {
         getTransactionByUserIdRepository,
         getUserByIdRepository,
     )
-    const createTransactionController = new GetTransactionByUserIdController(
+    const getTransactionController = new GetTransactionByUserIdController(
         getTransactionByUserIdUseCase,
     )
 
-    return createTransactionController
+    return getTransactionController
 }
 
 export const makeUpdateTransactionController = () => {
